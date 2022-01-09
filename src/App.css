@@ -1,3 +1,13 @@
 .gray-background{
   background: darkgray;
 }
+/* .classes_root{
+  width: '100%';
+  marginTop: theme.spacing(3);
+  overflowX: "auto" ;
+  /* 전체 바깥쪽에 해당하는 root는 x축에 오버플로우가 발생할수있도록 */
+/* }
+.classes_table{
+  background: darkgray;
+  minWidth: 1080
+} */ 

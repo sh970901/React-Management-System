@@ -1,7 +1,27 @@
 import './App.css';
 import Customer from './components/Customer';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import {withStyles} from '@material-ui/core/styles';
 
-function App() {
+const styles = theme =>({
+  root: {
+    width: '100%',
+    marginTop: theme.spacing(3),
+    overflowX: "auto" //전체 바깥쪽에 해당하는 root는 x축에 오버플로우가 발생할수있도록
+  },
+  table: {
+    minWidth: 1080
+  }
+})
+
+
+function App(props) {
+  const {classes} = props;
   const customers = [{
     'id': 1,
     'image': 'https://placeimg.com/64/64/1',
@@ -22,59 +42,48 @@ function App() {
   {
     'id': 3,
     'image': 'https://placeimg.com/64/64/3',
-    'name': '이주희',
+    'name': '이범기',
     'birthday': '010326',
     'gender': '여',
     'job': '대학생'
 
   }]
+  //각 원소를 c라하고 순회를 함
+  //map을 사용하면 키값을 줘야함
+  console.log(props)
   return (
-    <div className="gray-background">
-      {
-        customers.map(c => {
-          return (
-            <Customer
-              key ={c.id}
-              id={c.id}
-              image={c.image}
-              name={c.name}
-              birthday={c.birthday}
-              gender={c.gender}
-              job={c.job}
-            ></Customer>
-          )
-        })
-        //각 원소를 c라하고 순회를 함
-        //map을 사용하면 키값을 줘야함
-      }
+    
+    <Paper className={classes.root}>
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+            <TableCell>번호</TableCell>
+            <TableCell>이미지</TableCell>
+            <TableCell>이름</TableCell>
+            <TableCell>생년월일</TableCell>
+            <TableCell>성별</TableCell>
+            <TableCell>직업</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          
+            {customers.map(c => {
+              return (<Customer
+                key={c.id}
+                id={c.id}
+                image={c.image}
+                name={c.name}
+                birthday={c.birthday}
+                gender={c.gender}
+                job={c.job}
+              ></Customer>)
+            })}
+          
 
-
-      {/* <Customer
-        id={customers[0].id}
-        image={customers[0].image}
-        name={customers[0].name}
-        birthday={customers[0].birthday}
-        gender={customers[0].gender}
-        job={customers[0].job}
-      ></Customer>
-      <Customer
-        id={customers[1].id}
-        image={customers[1].image}
-        name={customers[1].name}
-        birthday={customers[1].birthday}
-        gender={customers[1].gender}
-        job={customers[1].job}
-      ></Customer>
-      <Customer
-        id={customers[2].id}
-        image={customers[2].image}
-        name={customers[2].name}
-        birthday={customers[2].birthday}
-        gender={customers[2].gender}
-        job={customers[2].job}
-      ></Customer> */}
-    </div>
+        </TableBody>
+      </Table>
+    </Paper>
   );
 }
 
-export default App;
+export default withStyles(styles)(App);
