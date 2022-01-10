@@ -1,3 +1,4 @@
+import * as React from 'react';
 import './App.css';
 import Customer from './components/Customer';
 import Paper from '@material-ui/core/Paper';
@@ -9,6 +10,7 @@ import TableCell from '@material-ui/core/TableCell';
 import { withStyles } from '@material-ui/core/styles';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 
@@ -21,11 +23,15 @@ const styles = theme => ({
   },
   table: {
     minWidth: 1080
+  },
+  progress: {
+    margin: theme.spacing(2)
   }
 })
 
 // state = {
 //   customers: ""
+//   completed: 0
 // }
 
 // callApi = async () => {
@@ -35,15 +41,23 @@ const styles = theme => ({
 // }
 
 // componentDidMount(){
+//  this.timer = setInterval(this.progress, 20)
 //   this.callApi()
 //   .then(res=> this.setState({customers: res}))
 //   .catch(err => console.log(err));
 // }
 
 
+// progress=()=> {
+//   const {completd} = this.state;
+//   this.setState({completed: completer >=100? 0 : completed +1})
+// }
+
 function App(props) {
 
   const [customers, setCustomers] = useState([]);
+  const [progress, setProgress] = useState(0);
+
 
   useEffect(() => {
     fetch('http://localhost:5000/api/customers')
@@ -52,6 +66,18 @@ function App(props) {
         setCustomers(body)
       })
   }, []);
+  
+
+  useEffect(()=>{
+    const timer = setInterval(() => {
+      setProgress(progress=> progress >= 100 ? 0 : progress + 1);
+    }, 200);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
 
   const { classes } = props;
   return (
@@ -79,7 +105,13 @@ function App(props) {
               gender={c.gender}
               job={c.job}
             ></Customer>)
-          }) : ""}
+          }) : 
+          <TableRow>
+            <TableCell colSpan="6" align='center'>
+              <CircularProgress className = {classes.progress} variant= "determinate" value= {progress}></CircularProgress>
+            </TableCell>
+          </TableRow>
+          }
 
 
         </TableBody>
