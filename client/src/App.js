@@ -6,9 +6,14 @@ import TableBody from '@material-ui/core/TableBody';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import {withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
-const styles = theme =>({
+
+
+
+const styles = theme => ({
   root: {
     width: '100%',
     marginTop: theme.spacing(3),
@@ -19,40 +24,38 @@ const styles = theme =>({
   }
 })
 
+// state = {
+//   customers: ""
+// }
+
+// callApi = async () => {
+//   const response = await fetch('/api/customers');
+//   const body = await response.json();
+//   return body;
+// }
+
+// componentDidMount(){
+//   this.callApi()
+//   .then(res=> this.setState({customers: res}))
+//   .catch(err => console.log(err));
+// }
+
 
 function App(props) {
-  const {classes} = props;
-  const customers = [{
-    'id': 1,
-    'image': 'https://placeimg.com/64/64/1',
-    'name': '홍길동',
-    'birthday': '960903',
-    'gender': '남',
-    'job': '대학생'
-  },
-  {
-    'id': 2,
-    'image': 'https://placeimg.com/64/64/2',
-    'name': '이승훈',
-    'birthday': '970901',
-    'gender': '남',
-    'job': '대학생'
 
-  },
-  {
-    'id': 3,
-    'image': 'https://placeimg.com/64/64/3',
-    'name': '이범기',
-    'birthday': '010326',
-    'gender': '여',
-    'job': '대학생'
+  const [customers, setCustomers] = useState([]);
 
-  }]
-  //각 원소를 c라하고 순회를 함
-  //map을 사용하면 키값을 줘야함
-  console.log(props)
+  useEffect(() => {
+    fetch('http://localhost:5000/api/customers')
+      .then((res) => res.json())
+      .then((body) => {
+        setCustomers(body)
+      })
+  }, []);
+
+  const { classes } = props;
   return (
-    
+
     <Paper className={classes.root}>
       <Table className={classes.table}>
         <TableHead>
@@ -66,19 +69,18 @@ function App(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          
-            {customers.map(c => {
-              return (<Customer
-                key={c.id}
-                id={c.id}
-                image={c.image}
-                name={c.name}
-                birthday={c.birthday}
-                gender={c.gender}
-                job={c.job}
-              ></Customer>)
-            })}
-          
+          {customers ? customers.map(c => {
+            return (<Customer
+              key={c.id}
+              id={c.id}
+              image={c.image}
+              name={c.name}
+              birthday={c.birthday}
+              gender={c.gender}
+              job={c.job}
+            ></Customer>)
+          }) : ""}
+
 
         </TableBody>
       </Table>
