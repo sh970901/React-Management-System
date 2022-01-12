@@ -50,7 +50,9 @@ const CustomerAdd = () => {
         setGender("")
         setUserName("")
         setJob("")
-        // window.location.reload();
+        console.log('gg')
+        
+        window.location.reload();
     }
      
 
@@ -63,10 +65,13 @@ const CustomerAdd = () => {
             formData.append('birthday', birthday);
             formData.append('gender', gender);
             formData.append('job', job);
+            console.log(formData)
+            
+
             const config = {
                 headers: {
                     
-                    'content-type': 'multipart/form-data',
+                    'content-type': 'multipart/form-data'
                     
                 }
             }
