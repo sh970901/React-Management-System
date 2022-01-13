@@ -50,7 +50,8 @@ const stateRefresh = () => {
   fetch('http://localhost:5000/api/customers')
       .then((res) => res.json())
       .then((body) => {
-        setCustomers(body)})
+        setCustomers(body)
+      })
 }
 
 
@@ -80,11 +81,13 @@ const stateRefresh = () => {
               <TableCell>생년월일</TableCell>
               <TableCell>성별</TableCell>
               <TableCell>직업</TableCell>
+              <TableCell>설정</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {customers ? customers.map(c => {
               return (<Customer
+                stateRefresh = {stateRefresh}
                 key={c.id}
                 id={c.id}
                 image={c.image}

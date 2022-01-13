@@ -35,7 +35,7 @@ connection.connect();
 
 
 app.get('/api/customers', (req, res) => {
-  connection.query('SELECT * FROM customer', function (error, rows, fields) {
+  connection.query('SELECT * FROM customer WHERE isDeleted = 0', function (error, rows, fields) {
     res.header("Access-Control-Allow-Origin", "*");
     res.send(rows);
   })
@@ -50,7 +50,7 @@ app.use('/image', express.static('./upload'))
 // })
 app.post('/api/customers', upload.single('image'), (req, res) => {
   console.log('hh')
-  let sql = 'INSERT INTO customer VALUES (null, ?,?,?,?,?)';
+  let sql = 'INSERT INTO customer VALUES (null, ?,?,?,?,?,now(),0)';
   let image = '/image' + req.file.filename;
   let name = req.body.name;
   let birthday = req.body.birthday;
@@ -70,6 +70,14 @@ app.post('/api/customers', upload.single('image'), (req, res) => {
       console.log(rows)
     })
 
+})
+app.delete('/api/customers/:id', (req,res)=>{
+  let sql = 'UPDATE customer SET isDeleted = 1 WHERE id = ?';
+  let params = [req.params.id];
+  connection.query(sql, params, 
+    (err, rows, fields) => {
+      res.send(rows)
+    })
 })
 
 
