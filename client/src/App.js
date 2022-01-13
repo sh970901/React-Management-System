@@ -45,6 +45,16 @@ function App(props) {
       })
   }, []);
 
+const stateRefresh = () => {
+  setCustomers([])
+  fetch('http://localhost:5000/api/customers')
+      .then((res) => res.json())
+      .then((body) => {
+        setCustomers(body)})
+}
+
+
+
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -95,7 +105,7 @@ function App(props) {
           </TableBody>
         </Table>
       </Paper>
-      <CustomerAdd></CustomerAdd>
+      <CustomerAdd stateRefresh = {stateRefresh}></CustomerAdd>
     </div>
   );
 }

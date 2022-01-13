@@ -10,14 +10,16 @@ const cors = require('cors');
 const data = fs.readFileSync('./database.json');
 const conf = JSON.parse(data)
 
-const multer = require('multer')
-const upload = multer({ dest: './upload' })
+
+
 
 
 app.use(cors());
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+const multer = require('multer')
+const upload = multer({ dest: './upload' })
 
 const connection = mysql.createConnection({
   host: conf.host,

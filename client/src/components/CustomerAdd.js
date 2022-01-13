@@ -2,7 +2,7 @@ import React from 'react'
 import { post } from 'axios';
 import { useState } from 'react';
 
-const CustomerAdd = () => {
+const CustomerAdd = (props) => {
 
 
 
@@ -43,6 +43,7 @@ const CustomerAdd = () => {
         addCustomer()
             .then((response) => {
                 console.log(response);
+                props.stateRefresh();
             })  
         setFile(null)
         setFileName("")
@@ -52,7 +53,7 @@ const CustomerAdd = () => {
         setJob("")
         console.log('gg')
         
-        window.location.reload();
+        // window.location.reload();
     }
      
 
