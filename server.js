@@ -43,8 +43,6 @@ app.get('/api/customers', (req, res) => {
 
 app.use('/image', express.static('./upload'))
 // 사용자입장에서 /image로 접근을 하는데 실제 서버에 ./upload와 매핑
-
-
 // app.post('/api/customers',upload.single('image'), (req,res)=> {
 //   console.log(req.body)
 // })
