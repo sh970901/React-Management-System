@@ -17,7 +17,4 @@ const Customer = (props) => {
         </TableRow>
     )
 }
-
-
-
 export default Customer
